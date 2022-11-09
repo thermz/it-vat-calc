@@ -32,18 +32,9 @@ function calculateTaxes( income ){
 	remaining = income;
 	taxes = taxBrackets.map( b => {
 		bracketAmount = b.upperBound - b.lowerBound;
-		//console.log("bracketAmount is "+bracketAmount + " remaining is "+remaining);
-		if(bracketAmount > remaining){
-			actualBracket = remaining;
-			//console.log("Last remaining is "+remaining);
-			remaining = 0;
-		} else {
-			actualBracket = bracketAmount;
-			remaining -= bracketAmount
-		}
-		//console.log("upperBound is "+b.upperBound);
-		//console.log("actualBracket is "+actualBracket);
+		actualBracket = Math.min(remaining, bracketAmount);
 		tax = actualBracket * b.mult;
+		remaining -= Math.max(0, Math.min(remaining , bracketAmount));
 		return tax;
 	} );
 	
